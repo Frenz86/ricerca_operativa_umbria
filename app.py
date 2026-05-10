@@ -479,7 +479,7 @@ elif page == "🗺️ Mappa Territorio":
         lat=[c["base_lat"] for c in carriers_anpas],
         lon=[c["base_lon"] for c in carriers_anpas],
         mode="markers+text",
-        marker=dict(size=17, color="#e67e22", symbol="triangle-up"),
+        marker=dict(size=34, color="#e67e22", symbol="triangle-up"),
         text=[c["name"].replace("ANPAS ", "") for c in carriers_anpas],
         textposition="bottom center", textfont=dict(size=9, color="#e67e22"),
         hovertext=[f"<b>{c['name']}</b><br>Federazione: ANPAS<br>Ambulanze: {c['n_ambulance']}<br>"
@@ -500,7 +500,7 @@ elif page == "🗺️ Mappa Territorio":
             lon=[n["lon"] for _, n in dist_mun],
             mode="markers",
             marker=dict(
-                size=[max(10, min(22, n.get("pop", 0) / 8000)) for _, n in dist_mun],
+                size=[max(20, min(44, n.get("pop", 0) / 4000)) for _, n in dist_mun],
                 color=dist_color, opacity=0.8,
             ),
             text=[f"<b>{n['name']}</b><br>Distretto: {dist_name}<br>Popolazione: {n.get('pop', 0):,}"
