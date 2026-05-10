@@ -70,7 +70,7 @@ with st.sidebar:
 st.warning("⚠️ **Nota sui dati** — Questa demo utilizza **dati sintetici** con proporzioni realistiche. "
            "I volumi aggregati, i nomi dei vettori e le coordinate geografiche sono basati sui dati reali "
            "del *Riepilogo Trasp sanitari 2025*, ma le singole richieste giornaliere, i costi per km, "
-           "le affidabilità per vettore e i risultati degli ottimizzatori sono generati con `numpy.random`. "
+           "le affidabilità per vettore e i risultati degli ottimizzatori sono generati con randomicamente. "
            "Per un sistema operativo servirà l'integrazione con il gestionale SAT (Fase 0 della roadmap).")
 with st.expander("Dettaglio: cosa è reale e cosa è simulato"):
     col_reale, col_sint = st.columns(2)
