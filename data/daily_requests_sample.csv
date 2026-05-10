@@ -1,0 +1,68 @@
+id,type,service,origin,destination,district,time_window_start,time_window_end,priority,is_recurring
+R-0001,dimissione,attrezzato,M-MT,D-PG,Alto Tevere,19:00,21:00,2,False
+R-0002,trasferimento,ambulance,H-UMB,H-GT,Alto Tevere,13:00,16:00,2,False
+R-0003,dimissione,attrezzato,H-CL,H-CL,Trasimeno,10:00,13:00,2,False
+R-0004,consulenza,attrezzato,M-ASS,H-POU,Assisano,10:00,13:00,2,False
+R-0005,consulenza,attrezzato,M-CST,M-MAG,Alto Chiascio,17:00,20:00,2,False
+R-0006,trasferimento,attrezzato,M-MA,H-MVT,Media Valle,11:00,14:00,2,False
+R-0007,consulenza,ambulance,M-FR,D-GUB,Media Valle,11:00,14:00,2,False
+R-0008,consulenza,attrezzato,H-CL,H-CC,Trasimeno,09:00,12:00,2,False
+R-0009,consulenza,ambulance,H-GT,D-PG,Alto Chiascio,14:00,17:00,2,False
+R-0010,dimissione,ambulance,M-DER,H-POU,Perugino,12:00,15:00,2,False
+R-0011,consulenza,ambulance,M-NOC,D-CC,Assisano,09:00,12:00,2,False
+R-0012,consulenza,attrezzato,M-CP,D-PG,Alto Tevere,13:00,16:00,2,False
+R-0013,dimissione,attrezzato,M-PA,H-CC,Trasimeno,09:00,12:00,2,False
+R-0014,trasferimento,ambulance,H-POU,M-MT,Assisano,09:00,12:00,2,False
+R-0015,trasferimento,attrezzato,H-CC,D-GUB,Alto Tevere,15:00,18:00,2,False
+R-0016,consulenza,attrezzato,M-COR,D-PG,Perugino,14:00,17:00,2,False
+R-0017,trasferimento,attrezzato,M-ASS,M-CH,Assisano,15:00,18:00,2,False
+R-0018,dimissione,ambulance,M-CP,H-POU,Alto Tevere,19:00,21:00,2,False
+R-0019,dimissione,ambulance,M-CT,H-MVT,Alto Tevere,07:00,10:00,2,False
+R-0020,dimissione,attrezzato,M-MVT,D-GUB,Media Valle,09:00,12:00,2,False
+R-0021,dimissione,attrezzato,M-DER,M-CH,Perugino,09:00,12:00,2,False
+R-0022,trasferimento,attrezzato,M-SF,H-GT,Alto Chiascio,09:00,12:00,2,False
+R-0023,dimissione,ambulance,M-CST,D-CC,Alto Chiascio,12:00,15:00,2,False
+R-0024,dimissione,attrezzato,M-MAG,M-PS,Perugino,11:00,14:00,2,False
+R-0025,dimissione,attrezzato,M-PS,H-POU,Trasimeno,14:00,17:00,2,False
+R-0026,dimissione,attrezzato,H-CL,D-CC,Trasimeno,07:00,10:00,2,False
+R-0027,dimissione,ambulance,M-VAL,H-GT,Assisano,13:00,16:00,2,False
+R-0028,dimissione,attrezzato,M-TO,H-CL,Trasimeno,10:00,13:00,2,False
+R-0029,dimissione,attrezzato,M-CL,M-UMB,Trasimeno,13:00,16:00,2,False
+R-0030,consulenza,attrezzato,M-SAS,M-CST,Alto Chiascio,12:00,15:00,2,False
+R-0031,dimissione,ambulance,M-UMB,M-SP,Alto Tevere,12:00,15:00,2,False
+R-0032,dimissione,ambulance,M-BV,H-CL,Assisano,12:00,15:00,2,False
+R-0033,consulenza,attrezzato,M-AC,H-CC,Media Valle,07:00,10:00,2,False
+R-0034,dimissione,ambulance,M-CST,H-UMB,Alto Chiascio,12:00,15:00,2,False
+R-0035,dimissione,attrezzato,M-CL,M-VAL,Trasimeno,10:00,13:00,2,False
+R-0036,trasferimento,ambulance,H-GT,H-CL,Alto Chiascio,11:00,14:00,2,False
+R-0037,dimissione,attrezzato,M-CT,H-GT,Alto Tevere,10:00,13:00,2,False
+R-0038,trasferimento,attrezzato,M-AC,M-PG,Media Valle,10:00,13:00,2,False
+R-0039,trasferimento,ambulance,M-COR,M-AC,Perugino,13:00,16:00,2,False
+R-0040,dimissione,ambulance,M-SP,D-PG,Alto Tevere,07:00,10:00,2,False
+R-0041,consulenza,ambulance,M-GUB,M-CL,Alto Chiascio,11:00,14:00,2,False
+R-0042,consulenza,attrezzato,M-PG3,H-MVT,Perugino,12:00,15:00,2,False
+R-0043,trasferimento,ambulance,M-CT2,H-MVT,Trasimeno,12:00,15:00,2,False
+R-0044,dimissione,ambulance,M-SMA,H-CL,Assisano,11:00,14:00,2,False
+R-0045,trasferimento,attrezzato,M-ASS,H-GT,Assisano,09:00,12:00,2,False
+R-0046,trasferimento,attrezzato,M-SPC,D-CC,Assisano,13:00,16:00,2,False
+R-0047,dimissione,attrezzato,H-GT,H-MVT,Alto Chiascio,12:00,15:00,2,False
+R-0048,consulenza,ambulance,M-DO,D-CC,Media Valle,12:00,15:00,2,False
+R-0049,consulenza,ambulance,H-GUB,H-CL,Alto Chiascio,16:00,19:00,2,False
+R-0050,trasferimento,attrezzato,M-CT2,M-COR,Trasimeno,19:00,21:00,2,False
+R-0051,dimissione,ambulance,M-MN,H-CL,Media Valle,10:00,13:00,2,False
+R-0052,trasferimento,attrezzato,H-CL,M-CT2,Trasimeno,16:00,19:00,2,False
+R-0053,dimissione,ambulance,H-CL,M-GT,Trasimeno,18:00,21:00,2,False
+R-0054,consulenza,ambulance,H-CC,M-LF,Alto Tevere,17:00,20:00,2,False
+R-0055,trasferimento,ambulance,M-MAG,D-CC,Perugino,17:00,20:00,2,False
+U-0001,urgente,attrezzato,M-CA,H-MVT,Media Valle,17:00,18:00,1,False
+U-0002,urgente,attrezzato,M-SAS,H-UMB,Alto Chiascio,20:00,21:00,1,False
+U-0003,urgente,ambulance,M-COR,H-UMB,Perugino,15:00,16:00,1,False
+U-0004,urgente,ambulance,M-FR,H-CC,Media Valle,20:00,21:00,1,False
+U-0005,urgente,attrezzato,M-PS,H-UMB,Trasimeno,14:00,15:00,1,False
+U-0006,urgente,ambulance,M-GT,H-MVT,Alto Chiascio,13:00,14:00,1,False
+U-0007,urgente,attrezzato,M-BA,H-CC,Assisano,11:00,12:00,1,False
+U-0008,urgente,attrezzato,M-PG3,H-POU,Perugino,14:00,15:00,1,False
+U-0009,urgente,attrezzato,M-CST,H-CL,Alto Chiascio,07:00,08:00,1,False
+U-0010,urgente,ambulance,M-UMB,H-CL,Alto Tevere,14:00,15:00,1,False
+U-0011,urgente,ambulance,M-PG2,H-MVT,Perugino,20:00,21:00,1,False
+U-0012,urgente,ambulance,M-FR,H-CL,Media Valle,12:00,13:00,1,False

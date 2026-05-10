@@ -1,0 +1,26 @@
+id,name,federation,base_lat,base_lon,base_district,n_ambulance,n_attrezzato,max_daily_trips,cost_per_km,reliability
+CRI-01,CRI Città di Castello,CRI,43.46,12.24,Alto Tevere,2,3,12,1.2,0.95
+CRI-02,CRI Umbertide,CRI,43.3,12.34,Alto Tevere,1,2,8,1.25,0.92
+CRI-03,CRI Gubbio,CRI,43.35,12.57,Alto Chiascio,2,2,10,1.2,0.94
+CRI-04,CRI Perugia,CRI,43.1,12.39,Perugino,3,4,18,1.15,0.96
+CRI-05,CRI Assisi,CRI,43.07,12.62,Assisano,1,2,8,1.25,0.91
+CRI-06,CRI Todi,CRI,42.78,12.41,Media Valle,1,2,8,1.3,0.9
+CRI-07,CRI Castiglione del Lago,CRI,43.03,12.02,Trasimeno,1,1,6,1.35,0.88
+MIS-01,Misericordia Città di Castello,Misericordie,43.47,12.23,Alto Tevere,2,3,12,1.1,0.93
+MIS-02,Misericordia Gubbio,Misericordie,43.36,12.58,Alto Chiascio,1,2,8,1.15,0.91
+MIS-03,Misericordia Gualdo Tadino,Misericordie,43.23,12.78,Alto Chiascio,1,2,7,1.2,0.89
+MIS-04,Misericordia Perugia,Misericordie,43.11,12.4,Perugino,2,3,14,1.1,0.95
+MIS-05,Misericordia Assisi,Misericordie,43.08,12.61,Assisano,1,2,8,1.2,0.92
+MIS-06,Misericordia Todi,Misericordie,42.79,12.42,Media Valle,1,2,8,1.25,0.9
+MIS-07,Misericordia Bastia Umbra,Misericordie,43.07,12.55,Assisano,1,2,7,1.2,0.91
+MIS-08,Misericordia Marsciano,Misericordie,42.92,12.33,Media Valle,1,1,6,1.25,0.88
+MIS-09,Misericordia Panicale,Misericordie,43.05,12.11,Trasimeno,1,1,5,1.3,0.87
+ANP-01,ANPAS Città di Castello,ANPAS,43.46,12.25,Alto Tevere,1,2,8,1.15,0.92
+ANP-02,ANPAS Sansepolcro,ANPAS,43.58,12.14,Alto Tevere,1,1,5,1.3,0.85
+ANP-03,ANPAS Gubbio,ANPAS,43.34,12.56,Alto Chiascio,1,2,7,1.2,0.9
+ANP-04,ANPAS Perugia,ANPAS,43.09,12.38,Perugino,2,3,14,1.1,0.94
+ANP-05,ANPAS Spello,ANPAS,43.0,12.67,Assisano,1,1,5,1.3,0.86
+ANP-06,ANPAS Todi,ANPAS,42.77,12.4,Media Valle,1,1,5,1.3,0.87
+ANP-07,ANPAS Castiglione del Lago,ANPAS,43.04,12.01,Trasimeno,1,1,5,1.35,0.85
+ANP-08,ANPAS Città della Pieve,ANPAS,42.94,11.99,Trasimeno,1,1,4,1.4,0.83
+ANP-09,ANPAS Deruta,ANPAS,42.99,12.43,Perugino,1,1,5,1.25,0.88

@@ -1,0 +1,46 @@
+id,origin,destination,district,pattern,sessions_per_week,shift,service
+DIAL-001,M-MAG,D-PG,Perugino,MWF,3,PM,ambulance
+DIAL-002,M-PG3,D-PG,Perugino,TTh,2,PM,ambulance
+DIAL-003,M-DER,D-PG,Perugino,MWF,3,PM,ambulance
+DIAL-004,M-PG2,D-PG,Perugino,TTh,2,PM,ambulance
+DIAL-005,M-PG2,D-PG,Perugino,MWF,3,PM,ambulance
+DIAL-006,M-COR,D-PG,Perugino,MWF,3,PM,ambulance
+DIAL-007,M-PG2,D-PG,Perugino,TTh,2,PM,ambulance
+DIAL-008,M-PG2,D-PG,Perugino,MWF,3,PM,ambulance
+DIAL-009,M-MAG,D-PG,Perugino,TTh,2,PM,ambulance
+DIAL-010,M-MAG,D-PG,Perugino,MWF,3,PM,ambulance
+DIAL-011,M-PG3,D-PG,Perugino,MWF,3,PM,ambulance
+DIAL-012,M-COR,D-PG,Perugino,TTh,2,PM,ambulance
+DIAL-013,M-PG,D-PG,Perugino,MWF,3,AM,ambulance
+DIAL-014,M-COR,D-PG,Perugino,TTh,2,PM,ambulance
+DIAL-015,M-COR,D-PG,Perugino,MWF,3,AM,ambulance
+DIAL-016,M-CP,D-CC,Alto Tevere,MWF,3,PM,ambulance
+DIAL-017,M-LF,D-PG,Alto Tevere,TTh,2,PM,ambulance
+DIAL-018,M-CP,D-CC,Alto Tevere,MWF,3,AM,ambulance
+DIAL-019,M-UMB,D-CC,Alto Tevere,TTh,2,PM,ambulance
+DIAL-020,M-UMB,D-CC,Alto Tevere,MWF,3,AM,ambulance
+DIAL-021,M-UMB,D-CC,Alto Tevere,MWF,3,AM,ambulance
+DIAL-022,M-MT,D-CC,Alto Tevere,TTh,2,AM,ambulance
+DIAL-023,M-CP,D-CC,Alto Tevere,MWF,3,PM,ambulance
+DIAL-024,M-GT,D-GUB,Alto Chiascio,TTh,2,PM,ambulance
+DIAL-025,M-SF,D-GUB,Alto Chiascio,MWF,3,PM,ambulance
+DIAL-026,M-SF,D-GUB,Alto Chiascio,MWF,3,AM,ambulance
+DIAL-027,M-SAS,D-GUB,Alto Chiascio,TTh,2,AM,ambulance
+DIAL-028,M-SAS,D-GUB,Alto Chiascio,MWF,3,PM,ambulance
+DIAL-029,M-GUB,D-GUB,Alto Chiascio,TTh,2,PM,ambulance
+DIAL-030,M-GUB,D-GUB,Alto Chiascio,MWF,3,PM,ambulance
+DIAL-031,M-GUB,D-GUB,Alto Chiascio,MWF,3,PM,ambulance
+DIAL-032,M-BV,D-PG,Assisano,TTh,2,PM,ambulance
+DIAL-033,M-NOC,D-PG,Assisano,MWF,3,AM,ambulance
+DIAL-034,M-NOC,D-PG,Assisano,TTh,2,AM,ambulance
+DIAL-035,M-NOC,D-PG,Assisano,MWF,3,AM,ambulance
+DIAL-036,M-VAL,D-PG,Assisano,MWF,3,PM,ambulance
+DIAL-037,M-FR,D-PG,Media Valle,TTh,2,AM,ambulance
+DIAL-038,M-DO,D-PG,Media Valle,MWF,3,AM,ambulance
+DIAL-039,M-MVT,D-PG,Media Valle,TTh,2,AM,ambulance
+DIAL-040,M-MVT,D-PG,Media Valle,MWF,3,AM,ambulance
+DIAL-041,M-AC,D-PG,Media Valle,MWF,3,AM,ambulance
+DIAL-042,M-CL,D-PG,Trasimeno,TTh,2,PM,ambulance
+DIAL-043,M-CH,D-PG,Trasimeno,MWF,3,AM,ambulance
+DIAL-044,M-PA,D-PG,Trasimeno,TTh,2,PM,ambulance
+DIAL-045,M-PA,D-PG,Trasimeno,MWF,3,PM,ambulance

@@ -1,0 +1,48 @@
+id,name,type,lat,lon,district,pop
+H-CC,Ospedale Città di Castello,hospital,43.4675,12.2388,Alto Tevere,0
+H-UMB,Ospedale Umbertide,hospital,43.3042,12.3381,Alto Tevere,0
+H-GUB,Ospedale Gubbio,hospital,43.3519,12.5754,Alto Chiascio,0
+H-GT,Ospedale Gualdo Tadino,hospital,43.2324,12.7822,Alto Chiascio,0
+H-POU,POU - Assisi/Santa Maria degli Angeli,hospital,43.061,12.5533,Assisano,0
+H-MVT,Ospedale Media Valle del Tevere,hospital,42.97,12.37,Media Valle,0
+H-CL,Ospedale Castiglione del Lago,hospital,43.0333,12.0167,Trasimeno,0
+D-CC,Centro Dialisi Città di Castello,dialysis_center,43.4675,12.24,Alto Tevere,0
+D-PG,Centro Dialisi Perugia,dialysis_center,43.1107,12.3908,Perugino,0
+D-GUB,Centro Dialisi Gubbio,dialysis_center,43.355,12.58,Alto Chiascio,0
+M-CT,Città di Castello,municipality,43.4675,12.2388,Alto Tevere,38000
+M-UMB,Umbertide,municipality,43.3042,12.3381,Alto Tevere,16000
+M-SP,Sansepolcro,municipality,43.5755,12.1378,Alto Tevere,15000
+M-CP,Città di Castello periferia,municipality,43.43,12.2,Alto Tevere,8000
+M-MT,Montone,municipality,43.3267,12.3333,Alto Tevere,1500
+M-GUB,Gubbio,municipality,43.3519,12.5754,Alto Chiascio,32000
+M-GT,Gualdo Tadino,municipality,43.2324,12.7822,Alto Chiascio,15000
+M-SF,Scheggia e Pascelupo,municipality,43.4933,12.6286,Alto Chiascio,1400
+M-CST,Costacciaro,municipality,43.4017,12.69,Alto Chiascio,1200
+M-SAS,Sigillo,municipality,43.3333,12.75,Alto Chiascio,2400
+M-PG,Perugia,municipality,43.1107,12.3908,Perugino,165000
+M-COR,Corciano,municipality,43.1167,12.3,Perugino,21000
+M-MAG,Maggio Perugino,municipality,43.05,12.35,Perugino,14000
+M-DER,Deruta,municipality,42.9917,12.42,Perugino,9000
+M-CL,Castiglione del Lago,municipality,43.0333,12.0167,Trasimeno,15000
+M-PA,Panicale,municipality,43.05,12.1167,Trasimeno,5500
+M-CT2,Città della Pieve,municipality,42.9333,11.9833,Trasimeno,7600
+M-TO,Tuoro sul Trasimeno,municipality,43.15,12.1,Trasimeno,3600
+M-PS,Passignano sul Trasimeno,municipality,43.1833,12.15,Trasimeno,5800
+M-CH,Chiusi (confine),municipality,43.0167,11.95,Trasimeno,8500
+M-ASS,Assisi,municipality,43.0706,12.6206,Assisano,28000
+M-SMA,Santa Maria degli Angeli,municipality,43.061,12.5533,Assisano,12000
+M-VAL,Valfabbrica,municipality,43.0,12.6167,Assisano,3200
+M-SPC,Spello,municipality,43.0,12.6667,Assisano,8600
+M-NOC,Nocera Umbra,municipality,43.1,12.8,Assisano,5800
+M-MVT,Todi,municipality,42.7833,12.4167,Media Valle,17000
+M-MA,Marsciano,municipality,42.9167,12.3333,Media Valle,18000
+M-DO,Deruta (Media Valle),municipality,42.9917,12.42,Media Valle,9500
+M-CA,Collazzone,municipality,42.85,12.55,Media Valle,3200
+M-FR,Fratta Todina,municipality,42.8,12.35,Media Valle,1900
+M-AC,Acquasparta,municipality,42.6833,12.55,Media Valle,5000
+M-MN,Massa Martana,municipality,42.7667,12.5333,Media Valle,3800
+M-LF,Lisciano Niccone,municipality,43.2167,12.15,Alto Tevere,700
+M-PG2,Perugia periferia est,municipality,43.13,12.45,Perugino,25000
+M-BV,Bettona,municipality,43.0333,12.4833,Assisano,4600
+M-BA,Bastia Umbra,municipality,43.0667,12.55,Assisano,22000
+M-PG3,Pontificalone/PG ovest,municipality,43.0833,12.3,Perugino,18000
