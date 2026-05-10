@@ -845,3 +845,13 @@ elif page == "📈 KPI & Confronto":
             "Impatto km": ["0%", "-5%", "-10%", "-13%", "-15%"],
         })
         st.dataframe(roadmap, height=300, use_container_width=True)
+
+# --- FOOTER ---
+st.markdown("---")
+st.markdown(
+    '<p style="text-align: center; color: #7f8c8d; font-size: 0.9em;">'
+    'Created by '
+    '<a href="https://www.linkedin.com/in/daniele-grotti/" target="_blank">Daniele Grotti</a>'
+    '</p>',
+    unsafe_allow_html=True
+)
