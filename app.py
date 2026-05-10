@@ -397,15 +397,9 @@ elif page == "🗺️ Mappa Territorio":
     st.title("Mappa Territoriale - AUSL Umbria 1")
     st.markdown("### Nodi, Vettori e Zone di Servizio")
 
-    st.info("Questa mappa mostra il territorio coperto dall'AUSL Umbria 1. Puoi zoomare e trascinare con il mouse. Passa il cursore su ogni punto per vedere i dettagli.")
-
-    st.markdown("""
-    **Cosa rappresentano i punti sulla mappa:**
-    - **Cerchi colorati** = Comuni (i 38 comuni del territorio, colorati per distretto di appartenenza)
-    - **Croci rosse grandi** = Ospedali e Presidi (da dove partono o arrivano i pazienti)
-    - **Punti blu** = Centri Dialisi (dove i pazienti vanno 2-3 volte a settimana)
-    - **Triangoli** = Basi dei vettori (le sedi delle 24+ associazioni di volontariato con le loro ambulanze)
-    """)
+    st.info("Mappa interattiva del territorio. Zoom con scroll, trascina per esplorare. "
+            "**Clicca sulle voci della legenda** per mostrare/nascondere le categorie. "
+            "Passa il mouse su ogni punto per i dettagli.")
 
     nodes = data["nodes"]
     carriers = data["carriers"]
@@ -415,66 +409,138 @@ elif page == "🗺️ Mappa Territorio":
         "Trasimeno": "#f39c12", "Assisano": "#9b59b6", "Media Valle": "#1abc9c",
     }
 
+    # Filtra dati per tipo
+    hospitals = [(nid, n) for nid, n in nodes.items() if n["type"] == "hospital"]
+    dialysis = [(nid, n) for nid, n in nodes.items() if n["type"] == "dialysis_center"]
+    municipalities = [(nid, n) for nid, n in nodes.items() if n["type"] == "municipality"]
+
+    carriers_cri = [c for c in carriers if c["federation"] == "CRI"]
+    carriers_mis = [c for c in carriers if c["federation"] == "Misericordie"]
+    carriers_anpas = [c for c in carriers if c["federation"] == "ANPAS"]
+
     fig = go.Figure()
 
-    # Comuni
-    for nid, n in nodes.items():
-        if n["type"] == "municipality":
-            fig.add_trace(go.Scattermapbox(
-                lat=[n["lat"]], lon=[n["lon"]],
-                mode="markers",
-                marker=dict(size=8, color=colors_district.get(n["district"], "#95a5a6")),
-                text=f"{n['name']}<br>Distretto: {n['district']}<br>Pop: {n.get('pop', 'N/D'):,}",
-                name="", hovertemplate="%{text}<extra></extra>",
-            ))
+    # --- OSPEDALI: croci rosse ---
+    fig.add_trace(go.Scattermap(
+        lat=[n["lat"] for _, n in hospitals],
+        lon=[n["lon"] for _, n in hospitals],
+        mode="markers",
+        marker=dict(size=48, color="#c0392b", symbol="hospital"),
+        text=[f"<b>{n['name']}</b><br>Presidio Ospedaliero<br>Distretto: {n['district']}" for _, n in hospitals],
+        hoverinfo="text", name="Ospedali / Presidi",
+        hoverlabel=dict(bgcolor="#c0392b", font_color="white"),
+    ))
 
-    # Ospedali
-    for nid, n in nodes.items():
-        if n["type"] == "hospital":
-            fig.add_trace(go.Scattermapbox(
-                lat=[n["lat"]], lon=[n["lon"]],
-                mode="markers",
-                marker=dict(size=15, color="red", symbol="hospital"),
-                text=f"🏥 {n['name']}<br>Distretto: {n['district']}",
-                name="", hovertemplate="%{text}<extra></extra>",
-            ))
+    # --- CENTRI DIALISI: cerchi blu ---
+    fig.add_trace(go.Scattermap(
+        lat=[n["lat"] for _, n in dialysis],
+        lon=[n["lon"] for _, n in dialysis],
+        mode="markers",
+        marker=dict(size=40, color="#2980b9", symbol="circle"),
+        text=[f"<b>{n['name']}</b><br>Centro Dialisi<br>Distretto: {n['district']}" for _, n in dialysis],
+        hoverinfo="text", name="Centri Dialisi",
+        hoverlabel=dict(bgcolor="#2980b9", font_color="white"),
+    ))
 
-    # Centri dialisi
-    for nid, n in nodes.items():
-        if n["type"] == "dialysis_center":
-            fig.add_trace(go.Scattermapbox(
-                lat=[n["lat"]], lon=[n["lon"]],
-                mode="markers",
-                marker=dict(size=12, color="blue", symbol="circle"),
-                text=f"🩺 {n['name']}",
-                name="", hovertemplate="%{text}<extra></extra>",
-            ))
+    # --- VETTORI CRI: triangoli viola ---
+    fig.add_trace(go.Scattermap(
+        lat=[c["base_lat"] for c in carriers_cri],
+        lon=[c["base_lon"] for c in carriers_cri],
+        mode="markers+text",
+        marker=dict(size=34, color="#8e44ad", symbol="triangle-up"),
+        text=[c["name"].replace("CRI ", "") for c in carriers_cri],
+        textposition="bottom center", textfont=dict(size=9, color="#8e44ad"),
+        hovertext=[f"<b>{c['name']}</b><br>Federazione: CRI<br>Ambulanze: {c['n_ambulance']}<br>"
+                   f"Attrezzati: {c['n_attrezzato']}<br>Max viaggi/gg: {c['max_daily_trips']}<br>"
+                   f"Costo/km: {c['cost_per_km']:.2f} euro<br>Affidabilita: {c['reliability']:.0%}"
+                   for c in carriers_cri],
+        hoverinfo="text", name="Vettori CRI",
+        hoverlabel=dict(bgcolor="#8e44ad", font_color="white"),
+    ))
 
-    # Basi vettori
-    for c in carriers:
-        fig.add_trace(go.Scattermapbox(
-            lat=[c["base_lat"]], lon=[c["base_lon"]],
+    # --- VETTORI MISERICORDIE: triangoli verdi ---
+    fig.add_trace(go.Scattermap(
+        lat=[c["base_lat"] for c in carriers_mis],
+        lon=[c["base_lon"] for c in carriers_mis],
+        mode="markers+text",
+        marker=dict(size=34, color="#27ae60", symbol="triangle-up"),
+        text=[c["name"].replace("Misericordia ", "") for c in carriers_mis],
+        textposition="bottom center", textfont=dict(size=9, color="#27ae60"),
+        hovertext=[f"<b>{c['name']}</b><br>Federazione: Misericordie<br>Ambulanze: {c['n_ambulance']}<br>"
+                   f"Attrezzati: {c['n_attrezzato']}<br>Max viaggi/gg: {c['max_daily_trips']}<br>"
+                   f"Costo/km: {c['cost_per_km']:.2f} euro<br>Affidabilita: {c['reliability']:.0%}"
+                   for c in carriers_mis],
+        hoverinfo="text", name="Vettori Misericordie",
+        hoverlabel=dict(bgcolor="#27ae60", font_color="white"),
+    ))
+
+    # --- VETTORI ANPAS: triangoli arancio ---
+    fig.add_trace(go.Scattermap(
+        lat=[c["base_lat"] for c in carriers_anpas],
+        lon=[c["base_lon"] for c in carriers_anpas],
+        mode="markers+text",
+        marker=dict(size=17, color="#e67e22", symbol="triangle-up"),
+        text=[c["name"].replace("ANPAS ", "") for c in carriers_anpas],
+        textposition="bottom center", textfont=dict(size=9, color="#e67e22"),
+        hovertext=[f"<b>{c['name']}</b><br>Federazione: ANPAS<br>Ambulanze: {c['n_ambulance']}<br>"
+                   f"Attrezzati: {c['n_attrezzato']}<br>Max viaggi/gg: {c['max_daily_trips']}<br>"
+                   f"Costo/km: {c['cost_per_km']:.2f} euro<br>Affidabilita: {c['reliability']:.0%}"
+                   for c in carriers_anpas],
+        hoverinfo="text", name="Vettori ANPAS",
+        hoverlabel=dict(bgcolor="#e67e22", font_color="white"),
+    ))
+
+    # --- COMUNI: cerchi per distretto (una traccia per ognuno dei 6 distretti) ---
+    for dist_name, dist_color in colors_district.items():
+        dist_mun = [(nid, n) for nid, n in municipalities if n["district"] == dist_name]
+        if not dist_mun:
+            continue
+        fig.add_trace(go.Scattermap(
+            lat=[n["lat"] for _, n in dist_mun],
+            lon=[n["lon"] for _, n in dist_mun],
             mode="markers",
-            marker=dict(size=10, color=colors_district.get(c["base_district"], "#95a5a6"),
-                        symbol="triangle-up"),
-            text=f"🚐 {c['name']}<br>Fed: {c['federation']}<br>Amb: {c['n_ambulance']}, Attr: {c['n_attrezzato']}",
-            name="", hovertemplate="%{text}<extra></extra>",
+            marker=dict(
+                size=[max(10, min(22, n.get("pop", 0) / 8000)) for _, n in dist_mun],
+                color=dist_color, opacity=0.8,
+            ),
+            text=[f"<b>{n['name']}</b><br>Distretto: {dist_name}<br>Popolazione: {n.get('pop', 0):,}"
+                  for _, n in dist_mun],
+            hoverinfo="text", name=f"Comuni - {dist_name}",
         ))
 
     fig.update_layout(
-        mapbox=dict(style="open-street-map", center=dict(lat=43.1, lon=12.4), zoom=8),
-        height=650, margin=dict(l=0, r=0, t=0, b=0),
-        showlegend=False,
+        map=dict(
+            style="open-street-map",
+            center=dict(lat=43.08, lon=12.40),
+            zoom=8.5,
+        ),
+        height=700,
+        margin=dict(l=0, r=0, t=30, b=0),
+        legend=dict(
+            title=dict(text="Categorie (clicca per nascondere)", font=dict(size=12)),
+            font=dict(size=11),
+            bgcolor="rgba(255,255,255,0.9)",
+            bordercolor="#ccc", borderwidth=1,
+            orientation="v",
+            yanchor="top", y=0.99,
+            xanchor="right", x=0.99,
+        ),
     )
 
     st.plotly_chart(fig, use_container_width=True)
 
-    # Legenda
-    st.markdown("**Legenda:** 🔴 Ospedali | 🔵 Centri Dialisi | ▲ Basi Vettori | ● Comuni")
-    cols = st.columns(6)
-    for i, (dist, color) in enumerate(colors_district.items()):
-        with cols[i]:
-            st.markdown(f"<span style='color:{color}'>■</span> {dist}", unsafe_allow_html=True)
+    # Statistiche sotto la mappa
+    st.markdown("---")
+    st.markdown("### Riepilogo Nodi Territoriali")
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        st.metric("Ospedali / Presidi", len(hospitals))
+    with c2:
+        st.metric("Centri Dialisi", len(dialysis))
+    with c3:
+        st.metric("Comuni", len(municipalities))
+    with c4:
+        st.metric("Vettori (Associazioni)", len(carriers))
 
 
 # --- PAGINA: Strategico ---
