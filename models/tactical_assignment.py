@@ -3,7 +3,6 @@ Assegna i trasporti pianificati del giorno seguente (~50-70 richieste) ai vettor
 Risolvibile ogni notte per il giorno dopo."""
 import pulp
 import numpy as np
-import pandas as pd
 import sys, os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 

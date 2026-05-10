@@ -4,9 +4,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
-import plotly.express as px
 import sys, os
-import hashlib
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -65,6 +63,39 @@ with st.sidebar:
         st.session_state["authenticated"] = False
         st.rerun()
     st.markdown("---")
+
+# --- AVVISO DATI SINTETICI ---
+st.warning("⚠️ **Nota sui dati** — Questa demo utilizza **dati sintetici** con proporzioni realistiche. "
+           "I volumi aggregati, i nomi dei vettori e le coordinate geografiche sono basati sui dati reali "
+           "del *Riepilogo Trasp sanitari 2025*, ma le singole richieste giornaliere, i costi per km, "
+           "le affidabilità per vettore e i risultati degli ottimizzatori sono generati con `numpy.random`. "
+           "Per un sistema operativo servirà l'integrazione con il gestionale SAT (Fase 0 della roadmap).")
+with st.expander("Dettaglio: cosa è reale e cosa è simulato"):
+    col_reale, col_sint = st.columns(2)
+    with col_reale:
+        st.markdown("**Dati reali**")
+        st.markdown("""
+        - Coordinate geografiche di ospedali, comuni, centri dialisi
+        - Nomi reali delle associazioni (CRI, Misericordie, ANPAS) e delle sedi
+        - Volumi aggregati dal file Excel 2025:
+          - 8.052 trasporti ospedalieri, 8.924 distrettuali
+          - 487.991 km ordinari ospedalieri, 688.235 km ordinari distrettuali
+          - 362.987 km dialisi (7.007 sedute)
+        - Ripartizione km e viaggi per distretto/presidio
+        - Popolazioni comunali
+        """)
+    with col_sint:
+        st.markdown("**Dati sintetici (generati)**")
+        st.markdown("""
+        - Numero ambulanze/attrezzati per ogni vettore
+        - Costo per km e punteggio affidabilità di ogni associazione
+        - Richieste giornaliere (~55 pianificate + 12 urgenti)
+        - Pazienti dialisi con pattern/turni specifici
+        - Matrice distanze (haversine, non stradale reale)
+        - Singoli assegnamenti e risultati per-vettore
+        - Risparmi calcolati dai modelli LP su dati simulati
+        """)
+st.markdown("---")
 
 st.set_page_config(
     page_title="Ottimizzazione Trasporti - AUSL Umbria 1",

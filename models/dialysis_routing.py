@@ -1,6 +1,5 @@
 """Sotto-Problema Dialisi: Periodic VRP per pazienti dializzati.
 Ottimizza le rotte ricorrenti (2-3 volte/settimana) consolidando pazienti vicini."""
-import pulp
 import numpy as np
 import pandas as pd
 import sys, os
