@@ -264,8 +264,6 @@ if page == "🏠 Cos'è questa App":
         ### La Tecnologia
 
         I modelli sono risolti con:
-        - **PuLP + CBC** (solver gratuito)
-        - **Python 3.13**
         - Modelli MIP (Mixed-Integer Programming)
         - Euristica greedy per il real-time
         """)
