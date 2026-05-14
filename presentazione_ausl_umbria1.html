@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ottimizzazione Trasporti Sanitari – AUSL Umbria 1</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #1a1a2e; color: #fff; }
+
+  .deck { width: 100%; }
+
+  .slide {
+    width: 1200px;
+    min-height: 675px;
+    margin: 20px auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    page-break-after: always;
+  }
+
+  /* ── COLOR PALETTE ── */
+  .bg-dark     { background: linear-gradient(135deg, #0f2044 0%, #1a3a6e 100%); }
+  .bg-blue     { background: linear-gradient(135deg, #1a3a6e 0%, #2563c7 100%); }
+  .bg-teal     { background: linear-gradient(135deg, #0f4c5c 0%, #0d7377 100%); }
+  .bg-green    { background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%); }
+  .bg-orange   { background: linear-gradient(135deg, #7c2d12 0%, #c2410c 100%); }
+  .bg-purple   { background: linear-gradient(135deg, #3b0764 0%, #6d28d9 100%); }
+  .bg-slate    { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); }
+  .bg-navy     { background: linear-gradient(135deg, #0c1445 0%, #1e3a8a 100%); }
+  .bg-red      { background: linear-gradient(135deg, #4c0519 0%, #9f1239 100%); }
+  .bg-gold     { background: linear-gradient(135deg, #451a03 0%, #92400e 100%); }
+
+  /* ── DECORATIVE STRIPE ── */
+  .stripe {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 8px;
+    background: linear-gradient(180deg, #60a5fa, #34d399);
+  }
+  .stripe-top {
+    position: absolute; left: 0; right: 0; top: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #60a5fa, #34d399, #f59e0b);
+  }
+
+  /* ── SLIDE LAYOUT ── */
+  .slide-inner { padding: 54px 64px 44px 78px; height: 100%; display: flex; flex-direction: column; }
+
+  .label {
+    font-size: 11px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: #60a5fa; margin-bottom: 12px;
+  }
+  h1 { font-size: 42px; font-weight: 800; line-height: 1.15; color: #fff; }
+  h1 span { color: #34d399; }
+  h2 { font-size: 30px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  h2 span { color: #60a5fa; }
+  .subtitle { font-size: 18px; color: #94a3b8; margin-top: 14px; line-height: 1.5; }
+  .subtitle strong { color: #f8fafc; }
+
+  /* ── TITLE SLIDE SPECIFIC ── */
+  .title-bottom {
+    margin-top: auto;
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .title-bottom .meta { font-size: 13px; color: #64748b; }
+  .title-bottom .badge {
+    background: rgba(96,165,250,0.15); border: 1px solid #60a5fa;
+    padding: 8px 18px; border-radius: 20px;
+    font-size: 13px; color: #60a5fa; font-weight: 600;
+  }
+  .big-number {
+    font-size: 80px; font-weight: 900;
+    color: #34d399; line-height: 1;
+  }
+
+  /* ── GRID LAYOUTS ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 24px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 14px; margin-top: 24px; }
+
+  /* ── CARDS ── */
+  .card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px; padding: 22px 20px;
+  }
+  .card.accent-blue  { border-left: 4px solid #60a5fa; }
+  .card.accent-green { border-left: 4px solid #34d399; }
+  .card.accent-amber { border-left: 4px solid #f59e0b; }
+  .card.accent-red   { border-left: 4px solid #f87171; }
+  .card.accent-purple{ border-left: 4px solid #a78bfa; }
+  .card.accent-teal  { border-left: 4px solid #2dd4bf; }
+  .card-icon { font-size: 28px; margin-bottom: 10px; }
+  .card-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #94a3b8; margin-bottom: 6px; }
+  .card-value { font-size: 32px; font-weight: 800; color: #fff; }
+  .card-value.green { color: #34d399; }
+  .card-value.amber { color: #f59e0b; }
+  .card-value.red   { color: #f87171; }
+  .card-sub { font-size: 12px; color: #64748b; margin-top: 4px; }
+  .card p { font-size: 14px; color: #cbd5e1; line-height: 1.6; margin-top: 8px; }
+  .card strong { color: #f8fafc; }
+
+  /* ── KPI BLOCK ── */
+  .kpi { text-align: center; padding: 24px 10px; }
+  .kpi .num { font-size: 44px; font-weight: 900; }
+  .kpi .unit { font-size: 14px; color: #94a3b8; }
+  .kpi .desc { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+  /* ── PHASE STEPS ── */
+  .phases { display: flex; gap: 0; margin-top: 28px; }
+  .phase {
+    flex: 1; padding: 22px 18px; position: relative;
+    background: rgba(255,255,255,0.05);
+    border-top: 3px solid;
+  }
+  .phase:nth-child(1) { border-color: #60a5fa; }
+  .phase:nth-child(2) { border-color: #34d399; }
+  .phase:nth-child(3) { border-color: #f59e0b; }
+  .phase:nth-child(4) { border-color: #a78bfa; }
+  .phase .ph-num { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #64748b; }
+  .phase .ph-label { font-size: 15px; font-weight: 700; color: #f8fafc; margin: 6px 0; }
+  .phase .ph-period { font-size: 12px; color: #60a5fa; font-weight: 600; }
+  .phase p { font-size: 12px; color: #94a3b8; margin-top: 8px; line-height: 1.5; }
+
+  /* ── TABLE ── */
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  th {
+    background: rgba(96,165,250,0.15);
+    color: #60a5fa; font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 10px 14px; text-align: left;
+  }
+  td { padding: 10px 14px; font-size: 14px; color: #cbd5e1; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  tr:hover td { background: rgba(255,255,255,0.04); }
+  td strong { color: #f8fafc; }
+  td.green { color: #34d399; font-weight: 700; }
+  td.amber { color: #f59e0b; font-weight: 700; }
+  td.red   { color: #f87171; font-weight: 700; }
+
+  /* ── LEVEL DIAGRAM ── */
+  .level-box {
+    display: flex; flex-direction: column; gap: 10px; margin-top: 20px;
+  }
+  .level {
+    display: flex; align-items: stretch; border-radius: 8px; overflow: hidden;
+  }
+  .level-num {
+    width: 52px; display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 900; flex-shrink: 0;
+  }
+  .lv1 .level-num { background: #1d4ed8; color: #bfdbfe; }
+  .lv2 .level-num { background: #065f46; color: #a7f3d0; }
+  .lv3 .level-num { background: #92400e; color: #fde68a; }
+  .level-body { padding: 14px 18px; background: rgba(255,255,255,0.05); flex: 1; }
+  .level-body .lh { font-size: 15px; font-weight: 700; color: #f8fafc; }
+  .level-body .lp { font-size: 12px; color: #94a3b8; margin-top: 3px; }
+  .level-body .lt { font-size: 12px; font-weight: 600; margin-top: 6px; }
+  .lv1 .level-body .lt { color: #60a5fa; }
+  .lv2 .level-body .lt { color: #34d399; }
+  .lv3 .level-body .lt { color: #f59e0b; }
+  .level-right { padding: 14px 20px; background: rgba(0,0,0,0.2); min-width: 180px; display: flex; flex-direction: column; justify-content: center; }
+  .level-right .lr-label { font-size: 10px; color: #64748b; letter-spacing: 1.5px; text-transform: uppercase; }
+  .level-right .lr-val { font-size: 13px; font-weight: 700; color: #fff; margin-top: 2px; }
+
+  /* ── IMPACT TABLE ── */
+  .impact-row { display: flex; gap: 12px; margin-top: 16px; }
+  .impact-item {
+    flex: 1; border-radius: 8px; padding: 16px;
+    background: rgba(255,255,255,0.05);
+    text-align: center;
+  }
+  .impact-before { font-size: 11px; color: #f87171; font-weight: 700; }
+  .impact-arrow  { font-size: 20px; color: #64748b; margin: 4px 0; }
+  .impact-after  { font-size: 18px; font-weight: 800; color: #34d399; }
+  .impact-label  { font-size: 11px; color: #94a3b8; margin-top: 6px; }
+  .impact-saving { font-size: 12px; color: #f59e0b; font-weight: 700; margin-top: 4px; }
+
+  /* ── TECH STACK ── */
+  .tech-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 16px; border-radius: 8px;
+    background: rgba(255,255,255,0.05);
+    margin-bottom: 10px;
+  }
+  .tech-badge {
+    width: 44px; height: 44px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .tech-name { font-size: 14px; font-weight: 700; color: #f8fafc; }
+  .tech-desc { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+
+  /* ── CALL TO ACTION ── */
+  .cta-box {
+    background: linear-gradient(135deg, rgba(96,165,250,0.15), rgba(52,211,153,0.1));
+    border: 1px solid rgba(96,165,250,0.3);
+    border-radius: 12px; padding: 28px 32px;
+    margin-top: 24px;
+  }
+  .cta-box h3 { font-size: 18px; font-weight: 700; color: #60a5fa; margin-bottom: 14px; }
+  .action-list { list-style: none; }
+  .action-list li {
+    padding: 8px 0; font-size: 14px; color: #cbd5e1;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .action-list li:last-child { border-bottom: none; }
+  .action-list li::before { content: '→'; color: #34d399; font-weight: 700; flex-shrink: 0; }
+
+  /* ── QUOTE BOX ── */
+  .quote {
+    margin-top: 28px; padding: 20px 24px;
+    border-left: 4px solid #f59e0b;
+    background: rgba(245,158,11,0.08);
+    border-radius: 0 8px 8px 0;
+    font-size: 15px; color: #fde68a; font-style: italic; line-height: 1.6;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: white; }
+    .slide { margin: 0; box-shadow: none; page-break-after: always; border-radius: 0; }
+  }
+
+  @media screen and (max-width: 1240px) {
+    .slide { width: 100%; min-height: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 1 – TITLE
+═══════════════════════════════════════════════════ -->
+<div class="slide bg-dark">
+  <div class="stripe"></div>
+  <div class="stripe-top"></div>
+  <div class="slide-inner">
+    <div class="label">Ricerca Operativa &amp; Innovazione Gestionale</div>
+    <h1>Ottimizzazione dei<br>Trasporti Sanitari<br><span>AUSL Umbria 1</span></h1>
+    <p class="subtitle">
+      Un sistema di <strong>Linear Programming a 3 livelli</strong> per la gestione<br>
+      centralizzata dei trasporti secondari non emergenziali.<br>
+      Dalla frammentazione alla Centrale Unica Trasporti (CUT).
+    </p>
+    <div class="title-bottom">
+      <div class="meta">
+        AUSL Umbria 1 &nbsp;|&nbsp; Maggio 2026<br>
+        <span style="color:#475569">Dipartimento Innovazione e Ricerca Operativa</span>
+      </div>
+      <div class="badge">Riservato – Uso Interno</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 2 – IL PROBLEMA OGGI
+═══════════════════════════════════════════════════ -->
+<div class="slide bg-red">
+  <div class="stripe"></div>
+  <div class="slide-inner">
+    <div class="label">Contesto – Situazione Attuale</div>
+    <h2>La gestione attuale: <span>frammentata e inefficiente</span></h2>
+    <div class="grid-2" style="margin-top:20px">
+      <div>
+        <div class="grid-2" style="margin-top:0;gap:12px">
+          <div class="card accent-red">
+            <div class="card-title">Vettori attivi</div>
+            <div class="card-value red">24+</div>
+            <div class="card-sub">Associazioni di volontariato<br>CRI, Misericordie, ANPAS</div>
+          </div>
+          <div class="card accent-red">
+            <div class="card-title">Convenzioni diverse</div>
+            <div class="card-value red">24</div>
+            <div class="card-sub">Tariffe eterogenee,<br>nessuno standard</div>
+          </div>
+          <div class="card accent-amber">
+            <div class="card-title">Fuori territorio</div>
+            <div class="card-value amber">15%</div>
+            <div class="card-sub">dei trasporti usa<br>vettori non locali</div>
+          </div>
+          <div class="card accent-red">
+            <div class="card-title">Non evasi</div>
+            <div class="card-value red">2%</div>
+            <div class="card-sub">richieste senza<br>vettore disponibile</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card accent-red" style="height:100%">
+          <div class="card-icon">⚠️</div>
+          <div class="card-title">Principali criticità</div>
+          <p><strong>Coordinamento manuale</strong> — ogni richiesta trattata caso per caso senza ottimizzazione sistemica.</p>
+          <p style="margin-top:10px"><strong>Assenza di dati granulari</strong> — si conoscono i totali annuali, non le singole tratte.</p>
+          <p style="margin-top:10px"><strong>Costi nascosti</strong> — vettori fuori territorio, duplicazioni e viaggi a vuoto non sono tracciati.</p>
+          <p style="margin-top:10px"><strong>Dialisi non ottimizzata</strong> — 45 pazienti con rotte ricorrenti gestiti senza consolidamento.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 3 – I NUMERI DEL PROBLEMA
+═══════════════════════════════════════════════════ -->
+<div class="slide bg-slate">
+  <div class="stripe"></div>
+  <div class="slide-inner">
+    <div class="label">Dati 2025 – Volume del Servizio</div>
+    <h2>Il perimetro: <span>1,6 milioni di km all'anno</span></h2>
+    <div class="grid-4" style="margin-top:20px">
+      <div class="kpi card accent-blue">
+        <div class="num" style="color:#60a5fa">1,6M</div>
+        <div class="unit">km / anno</div>
+        <div class="desc">Volume totale trasporti</div>
+      </div>
+      <div class="kpi card accent-green">
+        <div class="num" style="color:#34d399">~17.000</div>
+        <div class="unit">viaggi / anno</div>
+        <div class="desc">Ordinari + dialisi</div>
+      </div>
+      <div class="kpi card accent-amber">
+        <div class="num" style="color:#f59e0b">4.298</div>
+        <div class="unit">km²</div>
+        <div class="desc">Territorio servito<br>38 comuni, 6 distretti</div>
+      </div>
+      <div class="kpi card accent-purple">
+        <div class="num" style="color:#a78bfa">~100</div>
+        <div class="unit">richieste / giorno</div>
+        <div class="desc">70-80 secondarie<br>+ 20 ospedaliere</div>
+      </div>
+    </div>
+    <table style="margin-top:18px">
+      <tr>
+        <th>Area</th>
+        <th>Viaggi 2025</th>
+        <th>km 2025</th>
+        <th>km / viaggio</th>
+      </tr>
+      <tr><td><strong>PO Città di Castello + Umbertide</strong></td><td>3.444</td><td>196.123</td><td>57</td></tr>
+      <tr><td><strong>PO Gubbio-Gualdo Tadino</strong></td><td>2.348</td><td>127.991</td><td>55</td></tr>
+      <tr><td><strong>POU (Assisi / Media Valle / Castiglione)</strong></td><td>2.260</td><td>163.877</td><td>73</td></tr>
+      <tr><td><strong>Dializzati barellati</strong></td><td>7.007 sedute</td><td class="amber">362.987</td><td>52</td></tr>
+      <tr style="background:rgba(96,165,250,0.08)">
+        <td><strong>TOTALE</strong></td><td><strong>~17.000</strong></td><td><strong>~1.635.000</strong></td><td>—</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 4 – LA SOLUZIONE: SISTEMA LP A 3 LIVELLI
+═══════════════════════════════════════════════════ -->
+<div class="slide bg-blue">
+  <div class="stripe"></div>
+  <div class="slide-inner">
+    <div class="label">Soluzione – Architettura del Sistema</div>
+    <h2>Un sistema <span>LP gerarchico a 3 livelli</span></h2>
+    <p class="subtitle" style="margin-top:8px">Ogni livello opera su un orizzonte temporale diverso e risponde a domande diverse.</p>
+    <div class="level-box">
+      <div class="level lv1">
+        <div class="level-num">1</div>
+        <div class="level-body">
+          <div class="lh">Livello Strategico — Allocazione Territoriale</div>
+          <div class="lp">Transportation Problem (MIP) · Aggiornamento trimestrale</div>
+          <div class="lt">Assegna i 24 vettori alle 9 zone di servizio minimizzando i km attesi. Garantisce ridondanza (min 2 vettori/zona) e bilanciamento tra federazioni.</div>
+        </div>
+        <div class="level-right">
+          <div class="lr-label">Dimensione problema</div>
+          <div class="lr-val">432 variabili intere<br>+ 216 binarie</div>
+          <div class="lr-label" style="margin-top:8px">Tempo soluzione</div>
+          <div class="lr-val" style="color:#34d399">&lt; 1 secondo</div>
+        </div>
+      </div>
+      <div class="level lv2">
+        <div class="level-num">2</div>
+        <div class="level-body">
+          <div class="lh">Livello Tattico — Assegnamento Giornaliero</div>
+          <div class="lp">Assignment Problem con Time Windows (MIP) · Risolto la notte prima</div>
+          <div class="lt">Assegna i 50-70 trasporti pianificati a vettori specifici, rispettando tipo veicolo, finestre temporali e limiti di capacità giornaliera.</div>
+        </div>
+        <div class="level-right">
+          <div class="lr-label">Dimensione problema</div>
+          <div class="lr-val">~1.560 binarie<br>+ 2.000 seq.</div>
+          <div class="lr-label" style="margin-top:8px">Tempo soluzione</div>
+          <div class="lr-val" style="color:#34d399">10–60 secondi</div>
+        </div>
+      </div>
+      <div class="level lv3">
+        <div class="level-num">3</div>
+        <div class="level-body">
+          <div class="lh">Livello Operativo — Dispatch Real-Time</div>
+          <div class="lp">Euristica greedy + VRP locale · Risposta immediata</div>
+          <div class="lt">Gestisce richieste urgenti e imprevisti. Filtra vettori disponibili, calcola score di ottimalità, assegna in tempo reale. Integrato con la CUT.</div>
+        </div>
+        <div class="level-right">
+          <div class="lr-label">Risposta</div>
+          <div class="lr-val">Secondi</div>
+          <div class="lr-label" style="margin-top:8px">Non evasi target</div>
+          <div class="lr-val" style="color:#34d399">2% → &lt;0.5%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 5 – QUICK WIN: DIALISI
+═══════════════════════════════════════════════════ -->
+<div class="slide bg-teal">
+  <div class="stripe"></div>
+  <div class="slide-inner">
+    <div class="label">Priorità – Quick Win Immediato</div>
+    <h2>Iniziare dalla dialisi: <span>il problema più strutturato</span></h2>
+    <div class="grid-2" style="margin-top:20px">
+      <div>
+        <div class="card accent-teal">
+          <div class="card-icon">🩺</div>
+          <div class="card-title">Perché la dialisi?</div>
+          <p><strong>Stessi 45 pazienti</strong> — rotte ricorrenti 3 volte/settimana. Il problema è predittibile al 100%.</p>
+          <p style="margin-top:10px"><strong>7.007 sedute/anno</strong> — alto volume, alto impatto sull'ottimizzazione.</p>
+          <p style="margin-top:10px"><strong>Consolidamento immediato</strong> — 2 pazienti vicini sullo stesso veicolo dimezza i km di quella rotta.</p>
+          <p style="margin-top:10px"><strong>Periodic VRP</strong> — il modello matematico più adatto per rotte ricorrenti.</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="card accent-green">
+          <div class="card-title">Volume attuale dialisi</div>
+          <div class="card-value">362.987 km</div>
+          <div class="card-sub">Di cui: Perugino 211K km · Alto Chiascio 82K · Alto Tevere 70K</div>
+        </div>
+        <div class="card accent-green">
+          <div class="card-title">Risparmio stimato (-15/20%)</div>
+          <div class="card-value green">54.000 – 72.000</div>
+          <div class="card-sub">km/anno risparmiati con la sola ottimizzazione dialisi</div>
+        </div>
+        <div class="card accent-amber">
+          <div class="card-title">Equivalente economico</div>
+          <div class="card-value amber">50.000 – 90.000 €</div>
+          <div class="card-sub">solo dalla dialisi (≈ 1 €/km risparmiato)</div>
+        </div>
+      </div>
+    </div>
+    <div class="quote">
+      "La dialisi è il quick win più importante: stesse rotte, stessi pazienti ogni settimana.
+      L'ottimizzazione non richiede nuovi dati — basta un foglio con i 45 pazienti e le loro sedi."
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 6 – IMPATTO ATTESO
+═══════════════════════════════════════════════════ -->
+<div class="slide bg-green">
+  <div class="stripe"></div>
+  <div class="slide-inner">
+    <div class="label">Risultati Attesi – ROI del Progetto</div>
+    <h2>Impatto quantificato: <span>230.000 – 350.000 €/anno</span></h2>
+    <div class="impact-row">
+      <div class="impact-item">
+        <div class="impact-before">1.539.000 km</div>
+        <div class="impact-arrow">↓</div>
+        <div class="impact-after">~1.307.000 km</div>
+        <div class="impact-label">km annui totali</div>
+        <div class="impact-saving">− 232.000 km (−15%)</div>
+      </div>
+      <div class="impact-item">
+        <div class="impact-before">15% fuori territorio</div>
+        <div class="impact-arrow">↓</div>
+        <div class="impact-after">&lt; 3%</div>
+        <div class="impact-label">Trasporti fuori territorio</div>
+        <div class="impact-saving">− 2.000+ viaggi extra</div>
+      </div>
+      <div class="impact-item">
+        <div class="impact-before">2% non evasi</div>
+        <div class="impact-arrow">↓</div>
+        <div class="impact-after">&lt; 0,5%</div>
+        <div class="impact-label">Richieste senza vettore</div>
+        <div class="impact-saving">+ 255 pazienti serviti</div>
+      </div>
+      <div class="impact-item">
+        <div class="impact-before">24 contratti diversi</div>
+        <div class="impact-arrow">↓</div>
+        <div class="impact-after">3 tariffe</div>
+        <div class="impact-label">Armonizzazione contratti</div>
+        <div class="impact-saving">1 per federazione</div>
+      </div>
+    </div>
+    <table style="margin-top:20px">
+      <tr>
+        <th>Metrica</th><th>Stato attuale</th><th>Obiettivo</th><th>Risparmio</th>
+      </tr>
+      <tr>
+        <td><strong>km totali/anno</strong></td>
+        <td>1.539.000</td>
+        <td>~1.307.000</td>
+        <td class="green">−232.000 km (−15%)</td>
+      </tr>
+      <tr>
+        <td><strong>km dialisi/anno</strong></td>
+        <td>362.987</td>
+        <td>~300.000</td>
+        <td class="green">−63.000 km (−17%)</td>
+      </tr>
+      <tr>
+        <td><strong>Costi stimati</strong></td>
+        <td>~2,3-3,5 M€/anno</td>
+        <td>~2,0-3,0 M€/anno</td>
+        <td class="green">−230.000 / −350.000 €</td>
+      </tr>
+      <tr>
+        <td><strong>Risposta alle urgenze</strong></td>
+        <td>Manuale, variabile</td>
+        <td>Automatica, &lt; 30 sec</td>
+        <td class="green">Qualità del servizio</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 7 – ROADMAP DI IMPLEMENTAZIONE
+═══════════════════════════════════════════════════ -->
+<div class="slide bg-navy">
+  <div class="stripe"></div>
+  <div class="slide-inner">
+    <div class="label">Piano di Lavoro – 12 Mesi</div>
+    <h2>Roadmap di implementazione</h2>
+    <div class="phases">
+      <div class="phase">
+        <div class="ph-num">Fase 0</div>
+        <div class="ph-label">Raccolta Dati</div>
+        <div class="ph-period">Mesi 1–2</div>
+        <p>Tracciare ogni richiesta di trasporto. Inventario dei 24 vettori (veicoli, orari, basi). Calcolare la matrice delle distanze stradali.</p>
+        <p style="margin-top:8px;color:#60a5fa;font-weight:600">Output: database operativo pronto per i modelli LP</p>
+      </div>
+      <div class="phase">
+        <div class="ph-num">Fase 1</div>
+        <div class="ph-label">Modello Strategico</div>
+        <div class="ph-period">Mesi 3–4</div>
+        <p>Allocazione territoriale trimestrale. Assegnazione formale vettori alle zone. Riduzione immediata dei viaggi fuori territorio.</p>
+        <p style="margin-top:8px;color:#34d399;font-weight:600">Output: −60/70% trasporti fuori territorio</p>
+      </div>
+      <div class="phase">
+        <div class="ph-num">Fase 2</div>
+        <div class="ph-label">Modello Tattico</div>
+        <div class="ph-period">Mesi 5–7</div>
+        <p>Assegnamento giornaliero ottimizzato. Start dalle rotte dialisi (Periodic VRP). Estensione a tutti i trasporti pianificati.</p>
+        <p style="margin-top:8px;color:#f59e0b;font-weight:600">Output: −10/15% km pianificati</p>
+      </div>
+      <div class="phase">
+        <div class="ph-num">Fase 3+4</div>
+        <div class="ph-label">CUT + Contratti</div>
+        <div class="ph-period">Mesi 8–12</div>
+        <p>Dispatch operativo real-time integrato con la CUT. Armonizzazione contratti con prezzi ombra LP.</p>
+        <p style="margin-top:8px;color:#a78bfa;font-weight:600">Output: CUT operativa Q1 2027</p>
+      </div>
+    </div>
+    <div class="grid-3" style="margin-top:20px">
+      <div class="card accent-blue">
+        <div class="card-title">Milestone chiave</div>
+        <p><strong>Fine Mese 2</strong> — database richieste attivo<br>
+        <strong>Fine Mese 4</strong> — primo solver strategico live<br>
+        <strong>Fine Mese 7</strong> — dialisi ottimizzata<br>
+        <strong>Q1 2027</strong> — CUT pienamente operativa</p>
+      </div>
+      <div class="card accent-green">
+        <div class="card-title">Risorse necessarie</div>
+        <p>1 Data Analyst / Python dev (50% del tempo)<br>
+        Accesso al gestionale SAT (export CSV)<br>
+        Coordinamento con 24 associazioni vettori<br>
+        Infrastruttura: PostgreSQL + server applicativo</p>
+      </div>
+      <div class="card accent-amber">
+        <div class="card-title">Fattori critici</div>
+        <p>Qualità e completezza dei dati di input<br>
+        Collaborazione delle associazioni di volontariato<br>
+        Integrazione con i sistemi gestionali esistenti<br>
+        Change management con gli operatori CUT</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 8 – STACK TECNOLOGICO
+═══════════════════════════════════════════════════ -->
+<div class="slide bg-purple">
+  <div class="stripe"></div>
+  <div class="slide-inner">
+    <div class="label">Tecnologia – Soluzioni Open Source e Gratuite</div>
+    <h2>Stack tecnologico: <span>zero costi di licenza</span></h2>
+    <p class="subtitle" style="margin-top:8px">Tutte le componenti sono open source o con piani gratuiti sufficienti per il volume AUSL Umbria 1.</p>
+    <div class="grid-2" style="margin-top:20px">
+      <div>
+        <div class="tech-item">
+          <div class="tech-badge" style="background:rgba(52,211,153,0.15)">🔢</div>
+          <div>
+            <div class="tech-name">PuLP + CBC Solver</div>
+            <div class="tech-desc">Motore LP/MIP in Python — gratuito, dimensioni problema gestibili in secondi</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-badge" style="background:rgba(96,165,250,0.15)">🗺️</div>
+          <div>
+            <div class="tech-name">OpenRouteService API</div>
+            <div class="tech-desc">Matrice distanze stradali reali in Umbria — gratuito fino a 2.000 richieste/giorno</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-badge" style="background:rgba(167,139,250,0.15)">🗄️</div>
+          <div>
+            <div class="tech-name">PostgreSQL + PostGIS</div>
+            <div class="tech-desc">Database relazionale con estensione geografica — standard in sanità pubblica</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="tech-item">
+          <div class="tech-badge" style="background:rgba(245,158,11,0.15)">📊</div>
+          <div>
+            <div class="tech-name">Streamlit Dashboard</div>
+            <div class="tech-desc">Dashboard KPI real-time per gli operatori CUT — deployabile in 1 giorno</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-badge" style="background:rgba(248,113,113,0.15)">📥</div>
+          <div>
+            <div class="tech-name">Import CSV da gestionale SAT</div>
+            <div class="tech-desc">Integrazione non invasiva — senza modifiche ai sistemi esistenti</div>
+          </div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-badge" style="background:rgba(52,211,153,0.15)">🐍</div>
+          <div>
+            <div class="tech-name">Python 3.x</div>
+            <div class="tech-desc">Ecosistema ricco per LP e ML — facile da mantenere e estendere internamente</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card accent-green" style="margin-top:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div class="card-title">Costo infrastruttura stimato</div>
+          <div class="card-value green">0 € licenze &nbsp;+&nbsp; costi server standard ASL</div>
+        </div>
+        <div style="text-align:right;font-size:13px;color:#94a3b8">
+          Nessun vendor lock-in<br>
+          Competenze mantenibili internamente<br>
+          ROI massimizzato
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 9 – RISCHI E MITIGAZIONI
+═══════════════════════════════════════════════════ -->
+<div class="slide bg-gold">
+  <div class="stripe"></div>
+  <div class="slide-inner">
+    <div class="label">Gestione Rischi – Principali Sfide</div>
+    <h2>Rischi e <span>strategie di mitigazione</span></h2>
+    <table style="margin-top:20px">
+      <tr>
+        <th>Rischio</th><th>Probabilità</th><th>Impatto</th><th>Mitigazione</th>
+      </tr>
+      <tr>
+        <td><strong>Qualità dati insufficiente</strong> — dati storici incompleti o inconsistenti</td>
+        <td class="amber">Alta</td>
+        <td class="red">Alto</td>
+        <td>Fase 0 dedicata raccolta dati; validazione su 10 tratte campione vs Google Maps</td>
+      </tr>
+      <tr>
+        <td><strong>Resistenza vettori</strong> — associazioni non accettano assegnamenti "automatici"</td>
+        <td class="amber">Media</td>
+        <td class="amber">Medio</td>
+        <td>Modello propone, vettore conferma; buffer 10% capacità; coinvolgimento anticipato</td>
+      </tr>
+      <tr>
+        <td><strong>Integrazione SAT</strong> — gestionale non esporta dati in formato utile</td>
+        <td class="amber">Media</td>
+        <td class="amber">Medio</td>
+        <td>Import manuale CSV come fallback; contatto con fornitore SAT nella Fase 0</td>
+      </tr>
+      <tr>
+        <td><strong>Territorio montano</strong> — distanze elevate non ottimizzabili</td>
+        <td class="green">Bassa</td>
+        <td class="amber">Medio</td>
+        <td>Modello usa distanze stradali reali; realtà geografiche non classificate come inefficienze</td>
+      </tr>
+      <tr>
+        <td><strong>Complessità algoritmica</strong> — modello tattico troppo lento</td>
+        <td class="green">Bassa</td>
+        <td class="amber">Medio</td>
+        <td>CBC risolve in &lt; 60 sec; fallback greedy disponibile se necessario</td>
+      </tr>
+    </table>
+    <div class="card accent-amber" style="margin-top:16px">
+      <div class="card-title">Principio guida</div>
+      <p><strong>Affidabilità &gt; costo</strong> — la funzione obiettivo bilancia costo/km con lo score di affidabilità storica di ogni vettore. Un vettore che rispetta sempre i tempi ha un costo "corretto" inferiore nel modello.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 10 – CALL TO ACTION
+═══════════════════════════════════════════════════ -->
+<div class="slide bg-dark">
+  <div class="stripe"></div>
+  <div class="stripe-top"></div>
+  <div class="slide-inner">
+    <div class="label">Prossimi Passi – Decisioni Necessarie</div>
+    <h2>Cosa serve <span>per partire</span></h2>
+    <div class="grid-2" style="margin-top:20px">
+      <div>
+        <div class="cta-box">
+          <h3>Azioni immediate (entro 30 giorni)</h3>
+          <ul class="action-list">
+            <li>Avviare tracciamento granulare di ogni richiesta di trasporto nel gestionale SAT</li>
+            <li>Inventariare i 24 vettori: sede, flotta, orari operativi, costo/km contrattuale</li>
+            <li>Designare un referente tecnico interno (data analyst o IT) per il progetto</li>
+            <li>Raccogliere l'elenco dei 45 pazienti dializzati con indirizzi e centri di destinazione</li>
+            <li>Approvare il budget di sviluppo (stima: 1 FTE per 12 mesi)</li>
+          </ul>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="card accent-green">
+          <div class="card-title">Primo risultato tangibile</div>
+          <div class="card-value green" style="font-size:20px">Settimana 8–10</div>
+          <p>Ottimizzazione rotte dialisi attiva → risparmio immediato di 54.000–72.000 km/anno verificabile con dati reali.</p>
+        </div>
+        <div class="card accent-blue">
+          <div class="card-title">Obiettivo strategico</div>
+          <div class="card-value" style="font-size:18px">Q1 2027</div>
+          <p>Centrale Unica Trasporti (CUT) pienamente operativa presso l'Ospedale della Media Valle del Tevere, con dispatch automatico integrato.</p>
+        </div>
+        <div class="card accent-amber">
+          <div class="card-title">ROI atteso</div>
+          <div class="card-value amber">230K – 350K €</div>
+          <p>Risparmio annuo ricorrente. Payback dell'investimento stimato entro il primo anno di piena operatività.</p>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:auto;padding-top:16px;display:flex;justify-content:space-between;align-items:flex-end">
+      <div style="font-size:13px;color:#475569">AUSL Umbria 1 &nbsp;·&nbsp; Progetto CUT &nbsp;·&nbsp; Maggio 2026</div>
+      <div style="font-size:13px;color:#475569;text-align:right">Contatto: Dipartimento Innovazione<br><span style="color:#60a5fa">danielegrottiuk@gmail.com</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

@@ -60,6 +60,13 @@ if not check_password():
     st.stop()
 
 # Bottone logout nella sidebar
+st.markdown("""
+<style>
+    [data-testid="collapsedControl"] { display: none; }
+    section[data-testid="stSidebar"] { min-width: 260px !important; max-width: 260px !important; }
+</style>
+""", unsafe_allow_html=True)
+
 with st.sidebar:
     if st.button("🔒 Esci", use_container_width=True):
         st.session_state["authenticated"] = False

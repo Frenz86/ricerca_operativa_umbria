@@ -1,0 +1,82 @@
+Dataset sintetico (utils/synthetic_data.py)
+Coordinate geografiche
+I nodi (ospedali, comuni, centri dialisi) usano coordinate lat/lon reali da OpenStreetMap, ma approssimate al quarto decimale. Non rappresentano i cancelli dei presidi bensì i centroidi dei centri abitati — per ospedali come il POU (Assisi/Santa Maria degli Angeli) questo introduce un errore di 1–3 km.
+
+Matrice delle distanze — formula Haversine + fattore stradale casuale
+La distanza stradale reale viene approssimata in due passaggi:
+
+Si calcola la distanza in linea d'aria con la formula di Haversine (distanza sul geoide sferico).
+Si moltiplica per un fattore di tortuosità stradale estratto casualmente da Uniform(1.25, 1.45).
+Questo è il punto più critico del dataset. Il fattore corretto varia enormemente: le strade di fondovalle dell'Alto Tevere hanno un moltiplicatore ~1.25, ma i percorsi di montagna verso Gualdo Tadino o Nocera Umbra possono arrivare a 1.6–1.8. Il campionamento uniforme non coglie questa eterogeneità geografica.
+
+Velocità media uniforme
+Il tempo di percorrenza è calcolato come km / 0.6, cioè velocità media fissa di 36 km/h. Nella realtà: ~50 km/h su statali di fondovalle, ~25 km/h su strade montane o in attraversamento urbano di Perugia. Non c'è variazione per fascia oraria (traffico mattutino su Perugia/SS3bis non è modellato).
+
+Vettori sintetici ma realistici
+I 24 vettori (7 CRI, 9 Misericordie, 8 ANPAS) sono inventati ma con parametri coerenti coi dati reali: flotta 1–4 mezzi, costo/km €1.10–1.40, affidabilità 0.83–0.96. Lo score di affidabilità è un valore fisso (non storico); nella realtà andrebbe calcolato sul track record degli ultimi 12 mesi.
+
+Domanda giornaliera per zona
+Stimata dividendo i viaggi annuali per 260 giorni lavorativi — non tiene conto della stagionalità (estate: +20% per turisti nel Trasimeno, inverno: meno disponibilità vettori), né dei picchi settimanali (lunedì e venerdì sono i giorni con più dimissioni ospedaliere).
+
+Generazione richieste giornaliere
+Le richieste pianificate (55) e urgenti (12) sono generate campionando origini e destinazioni con probabilità uniformi sui nodi per tipo. Non c'è correlazione geografica: nella realtà le dimissioni dal PO di Città di Castello vanno prevalentemente verso l'Alto Tevere, non verso il Trasimeno. Le finestre temporali sono assegnate con una distribuzione oraria fissa che replica l'andamento tipico ma non cattura picchi specifici.
+
+Pazienti dializzati
+I 45 pazienti sono distribuiti proporzionalmente alla popolazione dei distretti (es. Perugino = 15 pazienti) e assegnati al centro dialisi più vicino in linea d'aria. In realtà l'assegnazione dipende anche dal posto letto disponibile e dalla preferenza clinica del nefrologo.
+
+Algoritmi
+Livello 1 — Modello Strategico (strategic_allocation.py)
+Distanza vettore-zona calcolata sul centroide
+La distanza tra un vettore e una zona è calcolata tra la sede del vettore e il centroide del distretto (es. (43.40, 12.27) per l'Alto Tevere), con fattore fisso 1.35. Non riflette la distanza verso i nodi effettivamente serviti all'interno della zona, che possono essere molto distanti dal centroide.
+
+Domanda come valore deterministico
+Il modello usa la domanda giornaliera come un numero fisso (es. Z-PG = 5 ambulanze + 4 attrezzati). In un Transportation Problem reale si userebbe la distribuzione della domanda con un margine di sicurezza esplicito. Il buffer del 10% è implicito nei parametri dei vettori, non nel modello.
+
+Vincolo di prossimità a 60 km fisso
+y[c,z] = 0 se la distanza supera 60 km in linea d'aria (corretta dal fattore 1.35). La soglia è arbitraria: un vettore di Todi che serve la Media Valle può essere più vicino di uno di Perugia che serve il Trasimeno, ma la soglia fissa non cattura questo.
+
+Bilanciamento federazioni
+Il vincolo è somma_vettori_federazione ≤ 0.6 × totale + 0.5. Il +0.5 è un arrotondamento che evita infeasibility su zone piccole ma introduce slackness — in una zona a 2 vettori, una sola federazione potrebbe comunque dominare.
+
+Livello 2 — Modello Tattico (tactical_assignment.py)
+Nessun vincolo di sequenziamento temporale
+Il modello assegna ogni richiesta a un vettore ma non risolve l'ordinamento temporale delle richieste sullo stesso vettore. Questo è il principale gap rispetto a un vero Assignment Problem con Time Windows: due richieste consecutive assegnate allo stesso vettore potrebbero essere temporalmente incompatibili (la seconda parte prima che la prima finisca). I vincoli disgiuntivi sono omessi perché renderebbero il problema NP-hard e richiederebbero un solver MIP più pesante.
+
+Km calcolati come base → origine → destinazione → base (andata/ritorno)
+Il costo di un viaggio include il trasferimento di posizionamento (base → origine) e il ritorno (destinazione → base). Questa è un'approssimazione corretta per un vettore con un solo viaggio; se il vettore fa più viaggi consecutivi, il ritorno alla base tra un viaggio e l'altro è sopravvalutato — nella realtà i vettori partono dal punto di scarico del viaggio precedente.
+
+Penalità fuori territorio fissa a 80 km-equivalenti
+Il soft constraint che scoraggia l'assegnamento fuori distretto è un valore arbitrario (80 km aggiunti al costo). Non è calibrato su dati storici.
+
+Baseline AS-IS simulata con caos controllato
+La funzione simulate_baseline_assignment simula la situazione attuale introducendo un 15% di probabilità casuale di non cercare prima il vettore locale. È una caricatura pedagogicamente utile ma non replica il processo decisionale reale degli operatori CUT.
+
+Livello 3 — Dispatch Operativo (operational_dispatch.py)
+Score di assegnamento con pesi fissi non calibrati
+Lo score è −km + 30 × affidabilità − 20 × (carico/max). I pesi 30 e 20 sono scelti euristicamente. Non sono stati ottimizzati su dati storici: una calibrazione corretta richiederebbe una regressione su casi passati per capire quali pesi minimizzano effettivamente il tempo di risposta.
+
+Raggio urgenti fisso a 50 km
+Per le urgenze il modello esclude vettori oltre 50 km dalla sede. Nessuna distinzione per priorità clinica: un'urgenza vera potrebbe giustificare un raggio maggiore, mentre un'urgenza logistica potrebbe tollerare un raggio minore.
+
+Carico giornaliero come conteggio grezzo
+Il carico del vettore è misurato come numero di viaggi assegnati, non come minuti occupati. Un vettore con 4 viaggi brevi (20 min ciascuno) appare più carico di uno con 2 viaggi lunghi (90 min ciascuno) — il contrario del reale.
+
+Dialisi — Periodic VRP (dialysis_routing.py)
+Clustering greedy, non ottimale
+Il raggruppamento dei pazienti usa un algoritmo greedy che scorre la lista nell'ordine dato e aggiunge pazienti vicini al primo libero. Il risultato dipende dall'ordine di iterazione (non è invariante). Un k-means geografico o un algoritmo di savings (Clarke-Wright) darebbe cluster migliori.
+
+Risparmio da consolidamento con formula approssimata
+Il risparmio per ogni paziente aggiuntivo nel cluster è stimato come (N−1) × 15% del costo totale. Questa formula sovrasemplifica: il risparmio reale dipende dalla geometria della rotta (deviazione effettiva per raccogliere il secondo paziente), non da una percentuale fissa.
+
+Annualizzazione a 52 settimane piatte
+Il risparmio annuale è km_settimanali × 52, senza considerare chiusure per ferie (agosto, Natale), ricoveri temporanei dei pazienti, o variazioni stagionali nel numero di sedute.
+
+Sintesi: cosa è affidabile e cosa no
+Aspetto	Affidabilità	Note
+Struttura geografica dei nodi	Alta	Coordinate reali, errore < 3 km
+Volumi per zona	Media	Aggregati reali ÷ 260 giorni, no stagionalità
+Distanze stradali	Bassa-Media	Haversine × fattore casuale, no tortuosità reale
+Risparmio km stimato	Indicativo	Ordine di grandezza corretto, ±30% sul valore puntuale
+Ottimizzazione sequenziamento	Non implementata	Mancano i vincoli disgiuntivi temporali
+Risparmio dialisi	Sovrastimato	Formula di consolidamento semplificata
+Il sistema è adatto a dimostrare la fattibilità dell'approccio e l'ordine di grandezza dei risparmi. Per passare a numeri contrattuali serve: (1) la matrice distanze da OpenRouteService con dati stradali reali, (2) lo storico granulare delle richieste dal gestionale SAT, (3) la calibrazione dei pesi dello score operativo su dati storici.
